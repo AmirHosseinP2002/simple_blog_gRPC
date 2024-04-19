@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package comment;
+
+import "google/protobuf/empty.proto";
+
+service CommentController {
+    rpc List(CommentListRequest) returns (stream Comment) {}
+    rpc Create(Comment) returns (Comment) {}
+    rpc Retrieve(CommentRetrieveRequest) returns (Comment) {}
+    rpc Update(Comment) returns (Comment) {}
+    rpc Destroy(Comment) returns (google.protobuf.Empty) {}
+}
+
+message Comment {
+    int32 id = 1;
+    string body = 2;
+    string created = 3;
+    string updated = 4;
+    int32 author = 5;
+    int32 post = 6;
+}
+
+message CommentListRequest {
+}
+
+message CommentRetrieveRequest {
+    int32 id = 1;
+}

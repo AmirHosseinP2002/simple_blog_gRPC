@@ -2,11 +2,11 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
+from protos.blog_proto import comment_pb2 as comment__pb2
 from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
-from protos.blog_proto import post_pb2 as post__pb2
 
 
-class PostControllerStub(object):
+class CommentControllerStub(object):
     """Missing associated documentation comment in .proto file."""
 
     def __init__(self, channel):
@@ -16,33 +16,33 @@ class PostControllerStub(object):
             channel: A grpc.Channel.
         """
         self.List = channel.unary_stream(
-                '/post.PostController/List',
-                request_serializer=post__pb2.PostListRequest.SerializeToString,
-                response_deserializer=post__pb2.Post.FromString,
+                '/comment.CommentController/List',
+                request_serializer=comment__pb2.CommentListRequest.SerializeToString,
+                response_deserializer=comment__pb2.Comment.FromString,
                 )
         self.Create = channel.unary_unary(
-                '/post.PostController/Create',
-                request_serializer=post__pb2.Post.SerializeToString,
-                response_deserializer=post__pb2.Post.FromString,
+                '/comment.CommentController/Create',
+                request_serializer=comment__pb2.Comment.SerializeToString,
+                response_deserializer=comment__pb2.Comment.FromString,
                 )
         self.Retrieve = channel.unary_unary(
-                '/post.PostController/Retrieve',
-                request_serializer=post__pb2.PostRetrieveRequest.SerializeToString,
-                response_deserializer=post__pb2.Post.FromString,
+                '/comment.CommentController/Retrieve',
+                request_serializer=comment__pb2.CommentRetrieveRequest.SerializeToString,
+                response_deserializer=comment__pb2.Comment.FromString,
                 )
         self.Update = channel.unary_unary(
-                '/post.PostController/Update',
-                request_serializer=post__pb2.Post.SerializeToString,
-                response_deserializer=post__pb2.Post.FromString,
+                '/comment.CommentController/Update',
+                request_serializer=comment__pb2.Comment.SerializeToString,
+                response_deserializer=comment__pb2.Comment.FromString,
                 )
         self.Destroy = channel.unary_unary(
-                '/post.PostController/Destroy',
-                request_serializer=post__pb2.Post.SerializeToString,
+                '/comment.CommentController/Destroy',
+                request_serializer=comment__pb2.Comment.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
                 )
 
 
-class PostControllerServicer(object):
+class CommentControllerServicer(object):
     """Missing associated documentation comment in .proto file."""
 
     def List(self, request, context):
@@ -76,41 +76,41 @@ class PostControllerServicer(object):
         raise NotImplementedError('Method not implemented!')
 
 
-def add_PostControllerServicer_to_server(servicer, server):
+def add_CommentControllerServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'List': grpc.unary_stream_rpc_method_handler(
                     servicer.List,
-                    request_deserializer=post__pb2.PostListRequest.FromString,
-                    response_serializer=post__pb2.Post.SerializeToString,
+                    request_deserializer=comment__pb2.CommentListRequest.FromString,
+                    response_serializer=comment__pb2.Comment.SerializeToString,
             ),
             'Create': grpc.unary_unary_rpc_method_handler(
                     servicer.Create,
-                    request_deserializer=post__pb2.Post.FromString,
-                    response_serializer=post__pb2.Post.SerializeToString,
+                    request_deserializer=comment__pb2.Comment.FromString,
+                    response_serializer=comment__pb2.Comment.SerializeToString,
             ),
             'Retrieve': grpc.unary_unary_rpc_method_handler(
                     servicer.Retrieve,
-                    request_deserializer=post__pb2.PostRetrieveRequest.FromString,
-                    response_serializer=post__pb2.Post.SerializeToString,
+                    request_deserializer=comment__pb2.CommentRetrieveRequest.FromString,
+                    response_serializer=comment__pb2.Comment.SerializeToString,
             ),
             'Update': grpc.unary_unary_rpc_method_handler(
                     servicer.Update,
-                    request_deserializer=post__pb2.Post.FromString,
-                    response_serializer=post__pb2.Post.SerializeToString,
+                    request_deserializer=comment__pb2.Comment.FromString,
+                    response_serializer=comment__pb2.Comment.SerializeToString,
             ),
             'Destroy': grpc.unary_unary_rpc_method_handler(
                     servicer.Destroy,
-                    request_deserializer=post__pb2.Post.FromString,
+                    request_deserializer=comment__pb2.Comment.FromString,
                     response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'post.PostController', rpc_method_handlers)
+            'comment.CommentController', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
 
  # This class is part of an EXPERIMENTAL API.
-class PostController(object):
+class CommentController(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
@@ -124,9 +124,9 @@ class PostController(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_stream(request, target, '/post.PostController/List',
-            post__pb2.PostListRequest.SerializeToString,
-            post__pb2.Post.FromString,
+        return grpc.experimental.unary_stream(request, target, '/comment.CommentController/List',
+            comment__pb2.CommentListRequest.SerializeToString,
+            comment__pb2.Comment.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -141,9 +141,9 @@ class PostController(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/post.PostController/Create',
-            post__pb2.Post.SerializeToString,
-            post__pb2.Post.FromString,
+        return grpc.experimental.unary_unary(request, target, '/comment.CommentController/Create',
+            comment__pb2.Comment.SerializeToString,
+            comment__pb2.Comment.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -158,9 +158,9 @@ class PostController(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/post.PostController/Retrieve',
-            post__pb2.PostRetrieveRequest.SerializeToString,
-            post__pb2.Post.FromString,
+        return grpc.experimental.unary_unary(request, target, '/comment.CommentController/Retrieve',
+            comment__pb2.CommentRetrieveRequest.SerializeToString,
+            comment__pb2.Comment.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -175,9 +175,9 @@ class PostController(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/post.PostController/Update',
-            post__pb2.Post.SerializeToString,
-            post__pb2.Post.FromString,
+        return grpc.experimental.unary_unary(request, target, '/comment.CommentController/Update',
+            comment__pb2.Comment.SerializeToString,
+            comment__pb2.Comment.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -192,8 +192,8 @@ class PostController(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/post.PostController/Destroy',
-            post__pb2.Post.SerializeToString,
+        return grpc.experimental.unary_unary(request, target, '/comment.CommentController/Destroy',
+            comment__pb2.Comment.SerializeToString,
             google_dot_protobuf_dot_empty__pb2.Empty.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

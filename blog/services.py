@@ -1,12 +1,14 @@
+import base64
 import grpc
 
 from google.protobuf import empty_pb2
 from django_grpc_framework.services import Service
 from django_grpc_framework import mixins
 from django_grpc_framework import generics
+from django.core.files.base import ContentFile
 
-from .models import Post
-from .serializers import PostProtoSerializer
+from .models import Category, Post, Comment
+from .serializers import CategoryProtoSerializer, CommentProtoSerializer, PostProtoSerializer
 
 
 # Generate PostService with Service
@@ -22,7 +24,7 @@ from .serializers import PostProtoSerializer
 #         serializer.is_valid(raise_exception=True)
 #         serializer.save()
 #         return serializer.message
-    
+
 #     def get_object(self, pk):
 #         try:
 #             return Post.objects.get(pk=pk)
@@ -62,3 +64,48 @@ from .serializers import PostProtoSerializer
 class PostService(generics.ModelService):
     queryset = Post.objects.all()
     serializer_class = PostProtoSerializer
+
+    def get_image_file_from_base64(self, image):
+        image_data = base64.b64decode(self.request.image)
+        image_file = ContentFile(image_data, name='image.jpg')
+        return image_file
+
+    def Create(self, request, context):
+        image_file = self.get_image_file_from_base64(request.image)
+
+        serializer = PostProtoSerializer(data={
+            'title': request.title,
+            'content': request.content,
+            'image': image_file,
+            'category': request.category,
+            'author': request.author,
+        })
+
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return serializer.message
+
+    def Update(self, request, context):
+        image_file = self.get_image_file_from_base64(request.image)
+
+        serializer = PostProtoSerializer(data={
+            'title': request.title,
+            'content': request.content,
+            'image': image_file,
+            'category': request.category,
+            'author': request.author,
+        })
+
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return serializer.message
+
+
+class CategoryService(generics.ModelService):
+    queryset = Category.objects.all()
+    serializer_class = CategoryProtoSerializer
+
+
+class CommentService(generics.ModelService):
+    queryset = Comment.objects.all()
+    serializer_class = CommentProtoSerializer
