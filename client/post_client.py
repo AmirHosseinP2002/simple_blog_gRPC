@@ -1,23 +1,17 @@
 import grpc
-import base64
 
 from django.contrib.auth.models import User
 
 from protos.blog_proto import post_pb2, post_pb2_grpc
 from blog.models import Category
+from utils.image_process import read_image_as_base64
 
 
 user = User.objects.get(id=1)
 category = Category.objects.get(id=1)
 
 
-def read_image_as_base64(image_path):
-    with open(image_path, 'rb') as file:
-        return base64.b64encode(file.read()).decode('utf-8')
-
 image_data = read_image_as_base64('image.jpg')
-
-print(type(image_data))
 
 
 with grpc.insecure_channel('localhost:50051') as channel:
