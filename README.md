@@ -4,7 +4,6 @@ Config
 
 <p>
 First you need to create venv for this project.
-So in the main root of project you should type this command in your Terminal:
 Therefore, in the root of your project, you must type this command in your terminal to create and activate a venv environment for you.
 </p>
 <pre>
